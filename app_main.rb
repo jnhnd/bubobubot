@@ -1,12 +1,15 @@
 # app.rb
 require 'sinatra'
 require 'line/bot'
-require './env'
+
+get '/' do
+  "Hello world"
+end
 
 def client
   @client ||= Line::Bot::Client.new { |config|
-    config.channel_secret = LINE_CHANNEL_SECRET
-    config.channel_token = LINE_ACCESS_TOKEN
+    config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+    config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
   }
 end
 
