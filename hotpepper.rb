@@ -1,7 +1,11 @@
+require 'net/http'
+require 'uri'
+require 'json'
+
 module Hotpepper
 
-  def test
-    "hotpepperテストだよ"
+  def getShop (keyword)
+    "テストだよ"
   end
 
 end
