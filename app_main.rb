@@ -1,9 +1,13 @@
 # app.rb
 require 'sinatra'
 require 'line/bot'
+require 'hotpepper'
+
+include Hotpepper
 
 get '/' do
-  "Hello world"
+  # "Hello world"
+  Hotpepper.test
 end
 
 def client
