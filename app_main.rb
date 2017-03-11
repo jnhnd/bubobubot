@@ -18,7 +18,7 @@ post '/callback' do
 
   signature = request.env['HTTP_X_LINE_SIGNATURE']
   unless client.validate_signature(body, signature)
-    error 400 do 'Bad Request aaaa' end
+    error 401 do 'Bad Request' end
   end
 
   events = client.parse_events_from(body)
