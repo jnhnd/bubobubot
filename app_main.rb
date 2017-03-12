@@ -32,7 +32,9 @@ post '/callback' do
       case event.type
       when Line::Bot::Event::MessageType::Text
         if m = event.message['text'].match(/店 (?<keyword>.*)/)
+          p 'aaaa'
           repText = getShop(m[:keyword])
+          p repText
         else
           repText = event.message['text']
         end
