@@ -14,7 +14,6 @@ module Hotpepper
       format: 'json'
     })
     uri = URI.parse("https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?#{params}")
-    p uri
 
     begin
       response = Net::HTTP.start(uri.host, uri.port) do |http|
@@ -32,11 +31,11 @@ module Hotpepper
         #{data.results.shop[idx].urls.pc}
         EOS
       else
-        p "#{response.code}: #{response.message}"
+        "#{response.code}: #{response.message}"
       end
 
     rescue => e
-      p e.message
+      e.message
     end
   end
 
