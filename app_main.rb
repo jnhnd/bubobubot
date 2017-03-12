@@ -30,9 +30,14 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
+        if m = event.message['text'].match(/店 (?<keyword>.*)/)
+          repText = getShop(m[:keyword])
+        else
+          repText = event.message['text']
+        end
         message = {
           type: 'text',
-          text: event.message['text']
+          text: repText
         }
         client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
