@@ -1,3 +1,3 @@
 require './app_main'
-$stdou.sync = true
+$stdout.sync = true
 run Sinatra::Application
