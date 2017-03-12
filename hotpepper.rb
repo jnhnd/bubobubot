@@ -1,19 +1,20 @@
-require 'net/http'
+require 'net/https'
 require 'uri'
 require 'json'
-require 'logger'
 
 module Hotpepper
 
   def getShop (keyword)
-    params = URI.encoding_www_form({
-      key: "#{ENV["HOTPEPPER_API_KEY"]}",
-      keyword: "#{keyword}",
+    key = ENV['HOTPEPPER_API_KEY']
+    params = URI.encode_www_form ({
+      key: key,
+      keyword: keyword,
       order: 4,
       count: 30,
       format: 'json'
     })
     uri = URI.parse("https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?#{params}")
+    p uri
 
     begin
       response = Net::HTTP.start(uri.host, uri.port) do |http|
@@ -26,16 +27,16 @@ module Hotpepper
       when Net::HTTPSuccess
         data = JSON.parse(response.body)
         idx = rand(30)
-        return <<~"EOS"
+        <<~"EOS"
         お店を見つけてきたぶぼ
         #{data.results.shop[idx].urls.pc}
         EOS
       else
-        logger.error("#{response.code}: #{response.message}")
+        p "#{response.code}: #{response.message}"
       end
 
     rescue => e
-      logger.error(e.message)
+      p e.message
     end
   end
 
