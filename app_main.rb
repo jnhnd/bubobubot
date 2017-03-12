@@ -1,13 +1,15 @@
 # app.rb
 require 'sinatra'
 require 'line/bot'
-require './hotpepper'
+require './lib/help'
+require './lib/hotpepper'
+require './lib/userlocal'
 
+include UserLocal
 include Hotpepper
 
 get '/' do
-  # "Hello world"
-  getShop('新宿')
+  "Hello world"
 end
 
 def client
@@ -31,12 +33,13 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
-        if m = event.message['text'].match(/店 (?<keyword>.*)/)
-          p 'aaaa'
+        msgText = event.message['text']
+        if m = msgText.match(/ヘルプ$/)
+          repText = HelpBubot::HelpDisplay
+        elsif m = msgText.match(/店 (?<keyword>.*)/)
           repText = getShop(m[:keyword])
-          p repText
         else
-          repText = event.message['text']
+          repText = aiReply(event.message['text'])
         end
         message = {
           type: 'text',
