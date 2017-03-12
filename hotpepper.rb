@@ -26,7 +26,7 @@ module Hotpepper
       when Net::HTTPSuccess
         data = JSON.parse(response.body)
         idx = rand(30)
-        <<-"EOS"
+        <<~"EOS"
         お店を見つけてきたぶぼ
         #{data.dig("results", "shop", idx, "urls", "pc")}
         EOS
